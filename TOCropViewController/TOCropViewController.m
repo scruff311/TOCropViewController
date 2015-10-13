@@ -238,6 +238,11 @@ typedef NS_ENUM(NSInteger, TOCropViewControllerAspectRatio) {
     [self.cropView setSimpleMode:NO animated:YES];
 }
 
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
 #pragma mark - Reset -
 - (void)resetCropViewLayout
 {
@@ -436,6 +441,7 @@ typedef NS_ENUM(NSInteger, TOCropViewControllerAspectRatio) {
     
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
 - (void)doneButtonTapped
