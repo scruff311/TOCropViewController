@@ -119,6 +119,7 @@ typedef NS_ENUM(NSInteger, TOCropViewControllerAspectRatio) {
     [super viewDidAppear:animated];
     self.inTransition = NO;
     if (animated && [UIApplication sharedApplication].statusBarHidden == NO) {
+        [UIApplication sharedApplication].statusBarHidden = YES;
         [UIView animateWithDuration:0.3f animations:^{ [self setNeedsStatusBarAppearanceUpdate]; }];
         
         if (self.cropView.gridOverlayHidden)
@@ -130,6 +131,7 @@ typedef NS_ENUM(NSInteger, TOCropViewControllerAspectRatio) {
 {
     [super viewWillDisappear:animated];
     self.inTransition = YES;
+    [UIApplication sharedApplication].statusBarHidden = NO;
     [UIView animateWithDuration:0.5f animations:^{ [self setNeedsStatusBarAppearanceUpdate]; }];
 }
 
@@ -441,7 +443,6 @@ typedef NS_ENUM(NSInteger, TOCropViewControllerAspectRatio) {
     
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
 - (void)doneButtonTapped
