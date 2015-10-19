@@ -131,7 +131,18 @@ typedef NS_ENUM(NSInteger, TOCropViewControllerAspectRatio) {
 {
     [super viewWillDisappear:animated];
     self.inTransition = YES;
-    [UIApplication sharedApplication].statusBarHidden = NO;
+    // Hide status bar for iOS 8+. This is needed because we hide the status bar in the image cropping UI
+    // and upon revealing it again, it screws with the iOS default handling of the status bar
+    BOOL isAtLeastiOS8 = [currSysVer compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending;
+    BOOL isLandscape = UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+    if (isLandscape) {
+        if (!isAtLeastiOS8) {
+            [UIApplication sharedApplication].statusBarHidden = NO;
+        }
+    }
+    else {
+        [UIApplication sharedApplication].statusBarHidden = NO;
+    }
     [UIView animateWithDuration:0.5f animations:^{ [self setNeedsStatusBarAppearanceUpdate]; }];
 }
 
